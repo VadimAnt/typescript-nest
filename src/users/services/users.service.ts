@@ -17,7 +17,10 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async findOneById(id: number) {
+  async findOneById(id: number): Promise<User> {
     return this.userRepository.findOne({ where: { id } });
+  }
+  async findOneByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ where: { email } });
   }
 }
