@@ -3,6 +3,8 @@ import { UsersService } from '../services/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../../core/decarators/roles.decorator';
 import { RolesGuard } from '../../core/guards/roles/roles.guard';
+import { User } from '../../core/decarators/user.decorator';
+import { UserEntity } from '../entities/user.entity';
 
 @Controller('users')
 @UseGuards(AuthGuard(), RolesGuard)
@@ -19,4 +21,12 @@ export class UsersController {
   async findOne(): Promise<any> {
     return 'This action returns all cats';
   }
+
+  @Get('/me')
+  async currentUser(@User() user: UserEntity): Promise<any> {
+    return {
+      user,
+    };
+  }
+
 }
