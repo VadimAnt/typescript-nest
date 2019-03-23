@@ -6,14 +6,10 @@ import { User } from '../entities/user.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
   async createUser(user): Promise<User> {
-    const newUser = new User();
-    user.name = user.name;
-    user.password = user.password;
-
     return this.userRepository.save(user);
   }
 

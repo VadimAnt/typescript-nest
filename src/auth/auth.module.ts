@@ -7,6 +7,7 @@ import { UsersModule } from '../users/users.module';
 import { AuthController } from './controllers/auth.controller';
 import { ConfigModule } from '../core/config/config.module';
 import { ConfigService } from '../core/config/services/config.service';
+import { CryptoService } from '../core/services/crypto.service';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { ConfigService } from '../core/config/services/config.service';
     }),
     UsersModule,
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, CryptoService],
   exports: [PassportModule, AuthService],
   controllers: [AuthController],
 })
