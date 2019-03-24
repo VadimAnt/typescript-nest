@@ -30,7 +30,7 @@ export class AuthController {
       email: existUser.email,
     });
 
-    return { token };
+    return { token, user: existUser };
   }
 
   @Post('/signup')
