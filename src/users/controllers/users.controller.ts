@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../../core/decarators/roles.decorator';
@@ -6,11 +6,16 @@ import { RolesGuard } from '../../core/guards/roles/roles.guard';
 import { User } from '../../core/decarators/user.decorator';
 import { UserEntity } from '../entities/user.entity';
 import { UpdateDto } from '../dto/update.dto';
+import { CryptoService } from '../../core/services/crypto.service';
+import { ChangePasswordDto } from '../dto/changePassword.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard(), RolesGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService ) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly cryptoService: CryptoService,
+  ) {}
 
   @Get()
   async findAll(): Promise<any> {
@@ -28,7 +33,7 @@ export class UsersController {
     return { user };
   }
 
-  @Post('/:id')
+  @Put(':id')
   @Roles('admin')
   async updateOne(@Param() params, @Body() updateData: UpdateDto): Promise<any> {
     const user = await this.usersService.findOneById(params.id);
@@ -46,5 +51,4 @@ export class UsersController {
   async currentUser(@User() user: UserEntity): Promise<any> {
     return { user };
   }
-
 }
